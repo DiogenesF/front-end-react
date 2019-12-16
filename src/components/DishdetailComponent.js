@@ -4,6 +4,7 @@ Modal, ModalBody, ModalHeader, Label } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import {Loading} from "./LoadingComponent";
+import {baseURL} from "../shared/BaseURL";
 
 
 
@@ -103,7 +104,7 @@ function RenderDish({ dish }) {
     return (
         <div>
             <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseURL + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle><strong>{dish.name}</strong></CardTitle>
                     <CardText>{dish.description}</CardText>
