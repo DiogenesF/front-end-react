@@ -1,5 +1,4 @@
 import * as ActionTypes from "./ActionTypes";
-import {DISHES} from "../shared/dishes";
 import {baseURL} from "../shared/BaseURL";
 
 export const addComment = (comment) => ({
@@ -150,3 +149,83 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const fetchLeaders = (leader) => (dispatch) => {
+    dispatch(leadersLoading(true));
+
+    fetch(baseURL + "leaders")
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error("Error" + response.status + ":" + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(leaders => dispatch(addLeaders(leaders)))
+    .catch(errors => dispatch(leadersFailed(errors)));
+}
+
+export const addLeaders = (leader) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leader
+});
+
+export const leadersFailed = (error) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: error
+});
+
+export const leadersLoading = () => ({
+    type: ActionTypes.LEADERS_LOADING
+});
+
+export const postFeedback = (firstname, lastname, number, email, agree, contactType, message) => (dispatch) => {
+
+    const newFeedback = {
+        firstname: firstname,
+        lastname: lastname,
+        number: number,
+        email: email,
+        agree: agree,
+        contactType: contactType,
+        message: message
+    }
+    
+
+    fetch(baseURL + "feedback", {
+        method: "POST",
+        body: JSON.stringify(newFeedback),
+        headers: {
+            "Content-type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        }
+        else {
+            var error = new Error("Error" + error.status + ":" + error.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errMess = new Error(error.message);
+        throw errMess;
+    })
+    .then(response => response.json())
+    .then(response => alert('Thank you for your feedback!\n'+JSON.stringify(response)))
+    .catch(error => {
+        console.log("Feedback couldn't be posted: " + error.message);
+        alert("Feedback couldn't be posted: " + error.message);
+    });
+}
