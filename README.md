@@ -1,4 +1,4 @@
-# This is the course I followed to create this repository
+### This is the course I followed to create this repository:
 https://www.coursera.org/learn/front-end-react
 
 
