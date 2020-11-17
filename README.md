@@ -1,3 +1,7 @@
+# This is the course I followed to create this repository
+https://www.coursera.org/learn/front-end-react
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
